@@ -68,10 +68,10 @@ class DataProcessingCLI:
         print("-" * 50)
         
         try:
-            # Import and run the init pipeline
-            from init import run_pipeline
+            # Import and run the social media pipeline
+            from process.social_media_pipeline import run_pipeline
             
-            print("⏳ Starting pipeline execution...")
+            print("⏳ Starting social media pipeline execution...")
             run_pipeline(
                 debug_mode=False,
                 skip_api=False,
@@ -80,10 +80,10 @@ class DataProcessingCLI:
                 skip_consolidation=False,
                 skip_notion=False
             )
-            print("✅ Default pipeline completed successfully!")
+            print("✅ Social media pipeline completed successfully!")
             
         except Exception as e:
-            print(f"❌ Error running default pipeline: {e}")
+            print(f"❌ Error running social media pipeline: {e}")
             self.logger.error(f"Pipeline execution failed: {e}")
             
         input("\nPress Enter to continue...")
@@ -274,6 +274,8 @@ class DataProcessingCLI:
                     from notion.notion_supabase_sync import main
                 elif module_id == "supabase_uploader":
                     from process.supabase_uploader import main
+                elif module_id == "social_media_pipeline":
+                    from process.social_media_pipeline import main
                 else:
                     print(f"❌ Module {module_id} not implemented in CLI yet.")
                     return

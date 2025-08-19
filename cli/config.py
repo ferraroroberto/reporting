@@ -88,6 +88,16 @@ MODULES = {
         "category": "output",
         "estimated_time": "3-5 minutes",
         "enabled": True
+    },
+    "social_media_pipeline": {
+        "name": "Social Media Pipeline",
+        "description": "Complete social media data processing pipeline (API → Notion)",
+        "path": "process/social_media_pipeline.py",
+        "type": "pipeline",
+        "dependencies": ["social_api_client", "data_processor", "profile_aggregator", "posts_consolidator", "notion_update"],
+        "category": "pipeline",
+        "estimated_time": "15-30 minutes",
+        "enabled": True
     }
 }
 
@@ -127,11 +137,11 @@ WORKFLOWS = [
     },
     {
         "id": "5",
-        "name": "Full Data Pipeline",
-        "description": "Complete end-to-end data processing",
-        "modules": ["social_api_client", "data_processor", "profile_aggregator", "posts_consolidator", "notion_update"],
+        "name": "Social Media Pipeline",
+        "description": "Complete social media data processing (API → Notion)",
+        "modules": ["social_media_pipeline"],
         "estimated_time": "15-30 minutes",
-        "category": "full"
+        "category": "pipeline"
     }
 ]
 
@@ -160,15 +170,21 @@ CATEGORIES = {
         "description": "Synchronization between systems",
         "icon": "🔄",
         "color": "purple"
+    },
+    "pipeline": {
+        "name": "Pipeline Modules",
+        "description": "Complete end-to-end data processing pipelines",
+        "icon": "🚀",
+        "color": "orange"
     }
 }
 
 # Execution Plans
 EXECUTION_PLANS = [
     {
-        "name": "Full Data Pipeline",
-        "description": "Complete end-to-end data processing",
-        "modules": ["social_api_client", "data_processor", "profile_aggregator", "posts_consolidator", "notion_update"],
+        "name": "Social Media Pipeline",
+        "description": "Complete social media data processing (API → Notion)",
+        "modules": ["social_media_pipeline"],
         "estimated_time": "15-30 minutes",
         "recommended": True
     },

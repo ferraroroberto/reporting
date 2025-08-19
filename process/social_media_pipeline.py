@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 """
-Initialization script to run the complete data processing pipeline:
+Social Media Pipeline - Complete data processing pipeline for social media data
+This module orchestrates the complete flow from API collection to Notion synchronization:
 1. social_api_client - Fetch data from social media APIs
 2. data_processor - Process and transform the raw data
 3. profile_aggregator - Aggregate profile data across platforms
@@ -15,8 +16,8 @@ import logging
 from pathlib import Path
 from datetime import datetime, timedelta
 
-# Add the current directory to the Python path
-sys.path.append(str(Path(__file__).parent))
+# Add the parent directory to the Python path
+sys.path.append(str(Path(__file__).parent.parent))
 from config.logger_config import setup_logger
 from social_client.social_api_client import main as run_social_api_client, configure_logger as configure_social_logger
 from process.data_processor import main as run_data_processor, configure_logger as configure_data_processor_logger
@@ -31,12 +32,12 @@ def configure_logger(debug_mode=False):
     """Set up logger with appropriate level based on debug mode."""
     global logger
     log_level = logging.DEBUG if debug_mode else logging.INFO
-    logger = setup_logger("init", file_logging=False, level=log_level)
+    logger = setup_logger("social_media_pipeline", file_logging=False, level=log_level)
     return logger
 
 def parse_arguments():
     """Parse command line arguments."""
-    parser = argparse.ArgumentParser(description='Run the complete data processing pipeline.')
+    parser = argparse.ArgumentParser(description='Run the complete social media data processing pipeline.')
     parser.add_argument('-d', '--debug', action='store_true', help='Enable debug mode')
     parser.add_argument('-s', '--skip-api', action='store_true', help='Skip the API data collection step')
     parser.add_argument('-p', '--skip-processing', action='store_true', help='Skip the data processing step')
@@ -85,11 +86,11 @@ def run_module(module_func, module_name, debug_mode=False, extra_args=None):
 def run_pipeline(debug_mode=False, skip_api=False, skip_processing=False, 
                 skip_aggregation=False, skip_consolidation=False, skip_notion=False,
                 reference_date=None):
-    """Run the complete data processing pipeline."""
+    """Run the complete social media data processing pipeline."""
     # Configure the main logger
     configure_logger(debug_mode)
     
-    logger.info("🚀 Starting the complete data processing pipeline")  # type: ignore
+    logger.info("🚀 Starting the complete social media data processing pipeline")  # type: ignore
     logger.info(f"🐞 Debug mode: {'Enabled' if debug_mode else 'Disabled'}")  # type: ignore
     
     # Use the reference date directly or today's date
@@ -150,10 +151,10 @@ def run_pipeline(debug_mode=False, skip_api=False, skip_processing=False,
     else:
         logger.info("⏭️ Skipping Notion Update step")  # type: ignore
     
-    logger.info("🎉 Complete data processing pipeline finished")  # type: ignore
+    logger.info("🎉 Complete social media data processing pipeline finished")  # type: ignore
 
 def main():
-    """Main function to run the complete pipeline."""
+    """Main function to run the complete social media pipeline."""
     args = parse_arguments()
     
     run_pipeline(

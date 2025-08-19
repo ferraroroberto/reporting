@@ -1,342 +1,221 @@
-# Social Media Automation Suite
+# Data Processing Project
 
-A comprehensive Python-based automation system for collecting, processing, and analyzing social media data across multiple platforms. This suite integrates with various APIs to fetch social media metrics, processes the data, stores it in a PostgreSQL database (Supabase), and syncs with Notion for reporting and analysis.
-
-## 🚀 Overview
-
-This automation suite consists of three main modules that work together to create a complete social media analytics pipeline:
-
-1. **Social Client** - Fetches data from social media platform APIs
-2. **Process** - Transforms and uploads data to PostgreSQL/Supabase
-3. **Notion** - Syncs data with Notion databases for reporting
-
-## 📊 Supported Platforms
-
-- LinkedIn (Profile & Posts)
-- Instagram (Profile & Posts)
-- Twitter/X (Profile & Posts)
-- Threads (Profile & Posts)
-- Substack (Profile & Posts)
-
-## 🏗️ Architecture
-
-```
-┌─────────────────┐     ┌─────────────────┐     ┌─────────────────┐
-│  Social APIs    │────▶│ Data Processing │────▶│    Supabase     │
-│   (RapidAPI)    │     │   & Transform   │     │   PostgreSQL    │
-└─────────────────┘     └─────────────────┘     └─────────────────┘
-                                                          │
-                                                          ▼
-                                                 ┌─────────────────┐
-                                                 │     Notion      │
-                                                 │   Databases     │
-                                                 └─────────────────┘
-```
-
-## 📁 Project Structure
-
-```
-automation/
-├── reporting/
-│   ├── social_client/         # API data collection
-│   │   ├── social_api_client.py
-│   │   └── README.md
-│   ├── process/               # Data processing & database operations
-│   │   ├── data_processor.py
-│   │   ├── supabase_uploader.py
-│   │   ├── profile_aggregator.py
-│   │   ├── posts_consolidator.py
-│   │   └── README.md
-│   ├── notion/                # Notion integration
-│   │   ├── notion_update.py
-│   │   ├── notion_supabase_sync.py
-│   │   ├── notion_database_structure.py
-│   │   └── README.md
-│   ├── config/                # Configuration files
-│   │   ├── config.json
-│   │   ├── mapping.json
-│   │   ├── logger_config.py
-│   │   └── README.md
-│   └── results/               # Output directories
-│       ├── raw/               # Raw API responses
-│       └── processed/         # Processed data files
-└── README.md
-```
+A comprehensive data processing system that collects, processes, and synchronizes social media data across multiple platforms and databases.
 
 ## 🚀 Quick Start
 
-### Prerequisites
+### Launch the Application
+```bash
+# Main launcher (recommended)
+python3 launch.py
 
-- Python 3.7+
-- PostgreSQL database (local or Supabase cloud)
-- API keys for social media platforms (via RapidAPI)
-- Notion API token (for Notion integration)
+# Direct CLI access
+python3 cli/main.py
 
-### Installation
+# Alternative launchers
+./cli/launch.sh
+python3 cli/run.py
+```
 
-1. **Clone the repository**
-   ```bash
-   git clone <repository-url>
-   cd automation/reporting
-   ```
+### Default Operation
+The CLI will start and show you a menu. **Choose Option 1** to run the default social media pipeline that:
+1. Collects data from social media APIs
+2. Processes and transforms the data
+3. Syncs everything to your Notion base
 
-2. **Install dependencies**
+## 🏗️ Project Structure
+
+```
+├── launch.py                    # 🚀 Main application launcher
+├── cli/                        # 🖥️ Command Line Interface
+│   ├── main.py                 # Main CLI interface
+│   ├── config.py               # Module configuration
+│   ├── run.py                  # Python launcher
+│   └── launch.sh               # Bash launcher
+├── social_client/              # 📡 Social Media API Clients
+│   └── social_api_client.py    # Data collection from APIs
+├── process/                    # ⚙️ Data Processing & Pipelines
+│   ├── social_media_pipeline.py # 🚀 Complete pipeline (API → Notion)
+│   ├── data_processor.py       # Data transformation engine
+│   ├── profile_aggregator.py   # Profile data aggregation
+│   ├── posts_consolidator.py   # Posts data consolidation
+│   └── supabase_uploader.py    # Database uploads
+├── notion/                     # 📘 Notion Integration
+│   ├── notion_update.py        # Update Notion databases
+│   └── notion_supabase_sync.py # Sync between Notion & Supabase
+├── config/                     # ⚙️ Configuration Files
+│   ├── logger_config.py        # Logging configuration
+│   └── mapping.json            # Data field mappings
+└── requirements.txt            # 📦 Python dependencies
+```
+
+## 🎯 Main Features
+
+### 🚀 **Social Media Pipeline** (Default Operation)
+- **Complete end-to-end processing**: From API collection to Notion synchronization
+- **Multi-platform support**: Handles data from various social media platforms
+- **Automated workflow**: Runs all steps in the correct dependency order
+- **Configurable**: Skip specific steps or customize processing
+
+### 🖥️ **Command Line Interface**
+- **Interactive menu**: Easy-to-use interface for all operations
+- **Module management**: Run individual modules or complete workflows
+- **Structure analysis**: Understand dependencies and execution order
+- **Predefined workflows**: Common operation patterns
+
+### 📊 **Data Processing**
+- **Raw data collection**: Automated API data fetching
+- **Data transformation**: Clean and structure raw data
+- **Cross-platform aggregation**: Consolidate data from multiple sources
+- **Quality assurance**: Validation and error handling
+
+### 🔄 **Synchronization**
+- **Notion integration**: Update databases with processed data
+- **Supabase sync**: Database synchronization and backup
+- **Real-time updates**: Keep all systems in sync
+
+## 🚀 Usage
+
+### 1. **Launch the Application**
+```bash
+python3 launch.py
+```
+
+### 2. **Choose Your Operation**
+The CLI presents 8 options:
+
+- **🚀 Option 1**: Run Default Pipeline (API → Notion) - **RECOMMENDED**
+- **📊 Option 2**: Show All Available Modules
+- **🔍 Option 3**: Analyze Project Structure
+- **⚙️ Option 4**: Run Custom Module
+- **📋 Option 5**: Show Module Dependencies
+- **🎯 Option 6**: Run Specific Workflow
+- **❓ Option 7**: Help & Information
+- **🚪 Option 8**: Exit
+
+### 3. **First Time? Use Option 1!**
+This runs the complete social media pipeline:
+- Collects fresh data from APIs
+- Processes and transforms the data
+- Syncs everything to Notion
+- Estimated time: 15-30 minutes
+
+## 🔧 Configuration
+
+### Environment Setup
+1. Install Python dependencies:
    ```bash
    pip install -r requirements.txt
    ```
 
-3. **Configure environment**
-   ```bash
-   # Copy example configurations
-   cp config/config_example.json config/config.json
-   cp process/.env_example process/.env
-   
-   # Edit config files with your credentials
-   ```
+2. Configure your environment variables (see `.env_example`)
 
-4. **Set up database**
-   - Create a Supabase project or set up local PostgreSQL
-   - Update database credentials in `.env` file
+3. Set up your Notion and Supabase credentials
 
-### Basic Usage
+### Module Configuration
+All modules are configured through `cli/config.py`:
+- Module definitions and metadata
+- Dependencies and execution order
+- Workflow definitions
+- Execution plans
 
-1. **Collect social media data**
-   ```bash
-   cd social_client
-   python social_api_client.py
-   ```
+## 📊 Available Modules
 
-2. **Process and upload data**
-   ```bash
-   cd ../process
-   python data_processor.py
-   ```
+### **Input Modules** 📥
+- **Social API Client**: Collects data from social media APIs
 
-3. **Aggregate profiles and posts**
-   ```bash
-   python profile_aggregator.py
-   python posts_consolidator.py
-   ```
+### **Processing Modules** ⚙️
+- **Data Processor**: Transforms and cleans raw data
+- **Profile Aggregator**: Aggregates profile data across platforms
+- **Posts Consolidator**: Consolidates posts data across platforms
 
-4. **Sync with Notion (optional)**
-   ```bash
-   cd ../notion
-   python notion_update.py YYYYMMDD
-   ```
+### **Output Modules** 📤
+- **Notion Update**: Updates Notion databases
+- **Supabase Uploader**: Uploads data to Supabase
 
-## 📋 Module Documentation
+### **Sync Modules** 🔄
+- **Notion-Supabase Sync**: Synchronizes between databases
 
-### [Social Client Module](reporting/social_client/README.md)
+### **Pipeline Modules** 🚀
+- **Social Media Pipeline**: Complete end-to-end processing
 
-Fetches data from social media APIs:
-- Automatic timestamp-based file naming
-- Skip existing data to avoid duplicate API calls
+## 🔄 Data Flow
+
+```
+Social APIs → Raw Data → Processed Data → Aggregated Data → Notion/Supabase
+     ↓              ↓           ↓              ↓              ↓
+API Client → Data Processor → Aggregators → Consolidators → Sync Modules
+```
+
+## 🛠️ Development
+
+### Adding New Modules
+1. Create your module in the appropriate directory
+2. Ensure it has a `main()` function
+3. Add it to `cli/config.py`
+4. Define dependencies correctly
+5. Test integration
+
+### Extending the Pipeline
+1. Add new processing steps to `process/social_media_pipeline.py`
+2. Update dependencies in the configuration
+3. Test the complete workflow
+4. Update documentation
+
+## 🚨 Important Notes
+
+- **Dependencies Matter**: Some modules require others to run first
+- **Use the CLI**: It automatically manages execution order
+- **Check Structure**: Use Option 3 to understand dependencies
+- **Default is Safe**: Option 1 handles everything correctly
+
+## 🆘 Getting Help
+
+- **Built-in Help**: Use Option 7 in the CLI
+- **Documentation**: Check the README files in each directory
+- **Structure Analysis**: Use Option 3 to understand the system
+- **Module Details**: Use Option 2 to see all available modules
+
+## 📝 Logging
+
+All operations are logged with:
+- Console output with emoji indicators
 - Debug mode for troubleshooting
-- Progress tracking and comprehensive logging
+- Error tracking and reporting
+- Progress monitoring
 
-**Key Features:**
-- 🚀 Multi-platform support
-- 💾 JSON output with metadata
-- 🔄 Smart caching
-- 🐞 Debug mode
+## 🔒 Security
 
-### [Process Module](reporting/process/README.md)
+- Environment-based configuration
+- Secure credential management
+- Database access controls
+- Row-level security policies
 
-Handles data transformation and database operations:
-- Field mapping based on configuration
-- Automatic type conversion
-- Database table creation
-- Batch processing for large datasets
+## 🚀 Future Enhancements
 
-**Key Components:**
-- 📊 `data_processor.py` - Main processing engine
-- 📤 `supabase_uploader.py` - Database interface
-- 🔄 `profile_aggregator.py` - Consolidates follower counts
-- 📝 `posts_consolidator.py` - Merges posts data
+The system is designed to be extensible:
+- Add new data sources
+- Implement additional processing steps
+- Extend synchronization capabilities
+- Add monitoring and alerting
+- Support for real-time processing
 
-### [Notion Module](reporting/notion/README.md)
+## 🤝 Contributing
 
-Integrates with Notion for reporting:
-- Bidirectional sync with Supabase
-- Automatic schema detection
-- Change tracking and logging
-- Support for all Notion property types
+1. Follow the existing module structure
+2. Update configuration files
+3. Test your changes thoroughly
+4. Update documentation
+5. Use the CLI for testing
 
-**Key Tools:**
-- 📝 `notion_update.py` - Updates Notion with Supabase data
-- 🔄 `notion_supabase_sync.py` - Continuous database sync
-- 📊 `notion_database_structure.py` - Schema analysis
+## 📞 Support
 
-### [Configuration](reporting/config/README.md)
+For issues and questions:
+1. Check the CLI help (Option 7)
+2. Review module documentation
+3. Check logs for error details
+4. Use the structure analysis (Option 3)
 
-Central configuration management:
-- API credentials and endpoints
-- Field mapping rules
-- Database settings
-- Logging configuration
+---
 
-## 🔄 Typical Workflow
-
-### Daily Data Collection
-
-```bash
-# 1. Fetch latest social media data
-cd reporting/social_client
-python social_api_client.py
-
-# 2. Process and upload to database
-cd ../process
-python data_processor.py
-
-# 3. Aggregate data
-python profile_aggregator.py
-python posts_consolidator.py
-
-# 4. Update Notion (if needed)
-cd ../notion
-python notion_update.py $(date +%Y%m%d)
-```
-
-### Continuous Notion Sync
-
-```bash
-# Run continuous sync in background
-cd reporting/notion
-python notion_supabase_sync.py
-```
-
-## 📊 Data Schema
-
-### Profile Data
-- `date`: Collection date
-- `platform`: Social media platform
-- `num_followers_*`: Follower count per platform
-
-### Posts Data
-- `date`: Collection date
-- `platform`: Source platform
-- `post_id`: Unique identifier
-- `posted_at`: Publication timestamp
-- `is_video`: Video content flag
-- `num_likes`: Engagement metrics
-- `num_comments`: Comment count
-- `num_reshares`: Share/repost count
-
-## 🔧 Advanced Configuration
-
-### Debug Mode
-
-Most scripts support debug mode for detailed logging:
-```bash
-python script_name.py --debug
-```
-
-### Environment-Specific Settings
-
-Switch between local and cloud databases:
-```bash
-python supabase_uploader.py --environment local
-```
-
-### Custom Configurations
-
-Override default configuration files:
-```bash
-python notion_supabase_sync.py --config custom_config.json
-```
-
-## 🐛 Troubleshooting
-
-### Common Issues
-
-1. **API Rate Limits**
-   - Use `--skip-existing` flag to avoid re-fetching data
-   - Implement delays between API calls
-
-2. **Database Connection Errors**
-   - Verify credentials in `.env` file
-   - Check network connectivity
-   - Ensure database is accessible
-
-3. **Missing Data Fields**
-   - Review `mapping.json` for correct field paths
-   - Enable debug mode to see raw API responses
-   - Check if API response structure changed
-
-4. **Notion Sync Issues**
-   - Verify Notion API token is valid
-   - Check database IDs in configuration
-   - Review Notion API rate limits
-
-### Debug Commands
-
-```bash
-# Test database connection
-cd reporting/process
-python supabase_test_connect.py
-
-# Analyze Notion database structure
-cd ../notion
-python notion_database_structure.py --debug
-
-# Process single platform
-cd ../social_client
-python social_api_client.py --platform linkedin_profile --debug
-```
-
-## 📈 Performance Optimization
-
-- **Batch Processing**: Data is processed in batches to handle large datasets
-- **Incremental Sync**: Only new/modified data is synced to avoid redundant operations
-- **Connection Pooling**: Database connections are pooled for efficiency
-- **Smart Caching**: API responses are cached daily to minimize API calls
-
-## 🔐 Security Best Practices
-
-1. **Never commit sensitive data**
-   - Keep `config.json` out of version control
-   - Use `.env` files for database credentials
-   - Rotate API keys regularly
-
-2. **Use environment variables in production**
-   ```bash
-   export SUPABASE_URL="your-url"
-   export SUPABASE_KEY="your-key"
-   ```
-
-3. **Implement access controls**
-   - Use read-only database users where possible
-   - Limit API key permissions
-   - Enable Supabase Row Level Security (RLS)
-
-## 🚧 Development
-
-### Adding New Platforms
-
-1. **Update configuration**
-   - Add platform config to `config.json`
-   - Define field mappings in `mapping.json`
-
-2. **Test data collection**
-   ```bash
-   python social_api_client.py --platform new_platform --debug
-   ```
-
-3. **Verify processing**
-   ```bash
-   python data_processor.py --debug
-   ```
-
-### Extending Functionality
-
-- Create custom processors in the `process` module
-- Add new Notion property type handlers
-- Implement additional aggregation queries
-
-## 📝 License and contact
-
-This project is free software for personal use from Roberto Ferraro 😇
-
-https://www.linkedin.com/in/ferraroroberto/
-
-Built with ❤️ for automated social media analytics and reporting
+**🎉 Ready to process your data? Launch the application with `python3 launch.py` and choose Option 1!**
